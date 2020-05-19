@@ -19,7 +19,7 @@ public class CarController {
 
     public CarController() {
         this.cars = new ArrayList<Car>();
-        cars.add(new Car(1L,"Ford", "Fusion", "czarny"));
+        cars.add(new Car(1L, "Ford", "Fusion", "czarny"));
         cars.add(new Car(2L, "Opel", "Astra", "czarny"));
         cars.add(new Car(3L, "Fiat", "Punto 2", "srebrny"));
     }
@@ -33,7 +33,7 @@ public class CarController {
     public ResponseEntity<Car> getCarById(@PathVariable long id) {
         Optional<Car> car = cars.stream().filter(c -> c.getId() == id).findFirst();
 
-        if(car.isPresent()) {
+        if (car.isPresent()) {
             return new ResponseEntity(car, HttpStatus.OK);
         }
 
@@ -53,7 +53,7 @@ public class CarController {
     @PostMapping
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
         boolean add = cars.add(car);
-        if(add) {
+        if (add) {
             return new ResponseEntity(HttpStatus.CREATED);
         }
 
@@ -64,7 +64,7 @@ public class CarController {
     public ResponseEntity modCar(@RequestBody Car newCar) {
         Optional<Car> first = cars.stream().filter(video -> video.getId() == newCar.getId()).findFirst();
 
-        if(first.isPresent()) {
+        if (first.isPresent()) {
             cars.remove(first.get());
             cars.add(newCar);
             return new ResponseEntity(HttpStatus.OK);
@@ -83,17 +83,22 @@ public class CarController {
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
-   @DeleteMapping("/{id}")
-   public ResponseEntity modCar(@PathVariable long id) {
-       Optional<Car> first = cars.stream().filter(c -> c.getId() == id).findFirst();
+    @DeleteMapping("/{id}")
+    public ResponseEntity modCar(@PathVariable long id) {
+        Optional<Car> first = cars.stream().filter(c -> c.getId() == id).findFirst();
 
-       if(first.isPresent()) {
-           cars.remove(first.get());
-           return new ResponseEntity(HttpStatus.OK);
-       }
+        if (first.isPresent()) {
+            cars.remove(first.get());
+            return new ResponseEntity(HttpStatus.OK);
+        }
 
-       return new ResponseEntity(HttpStatus.NOT_FOUND);
-   }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello";
+    }
 
 
 }
