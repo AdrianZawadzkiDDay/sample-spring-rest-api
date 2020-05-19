@@ -9,11 +9,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-//@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 class CarControllerTest {
@@ -26,5 +25,14 @@ class CarControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/cars/hello"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("hello"));
+    }
+
+    @Test
+    void getCars() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/cars"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(3)));
+
+
     }
 }
